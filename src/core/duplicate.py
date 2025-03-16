@@ -1,7 +1,7 @@
 import os
 
-from src.core.scanner import scan_directory
-from src.utils.hash_tools import get_file_hash
+from src.utils.hash_getter import get_file_hash
+from src.utils.logger import log_info
 
 
 def detect_duplicates(files):
@@ -19,14 +19,5 @@ def detect_duplicates(files):
         else:
             hashes[file_hash] = file
 
+    log_info(f"Found {len(duplicates)} duplicates.")
     return duplicates
-
-
-# Tests
-## Test detect_duplicates
-print("Test detect_duplicates")
-directory_name = "tests"
-directoy_path = os.path.join("../../", directory_name)
-print(detect_duplicates(scan_directory(directoy_path)))
-# {'../../tests\\aDuplicateDirectory\\[Nanatsu no Taizai AMV] It Has Begun - Starset.mp4':
-# '../../tests\\[Nanatsu no Taizai AMV] It Has Begun - Starset.mp4'}

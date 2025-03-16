@@ -11,8 +11,3 @@ def log_info(message):
 
 def log_error(message):
     logging.error(message)
-
-
-# Test
-log_info("Application démarrée.")
-log_error("Erreur lors du traitement d’un fichier.")

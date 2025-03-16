@@ -1,6 +1,8 @@
 import os
 import re
 
+from src.utils.logger import log_info
+
 
 def clean_filename(file_name, resolution):
     """
@@ -15,9 +17,5 @@ def clean_filename(file_name, resolution):
     # Add resolution to the end of the filename
     new_name = f"{name} ({resolution}){ext}"
 
+    log_info(f"File {name} has been renamed to {new_name}.")
     return new_name
-
-
-# Test
-print("Test clean_filename")
-print(clean_filename("une_video_[HD].mp4", "1080p"))  # "une video (1080p).mp4"
