@@ -1,22 +1,32 @@
-import hashlib
 import os
 
+from src.core.scanner import scan_directory
+from src.utils.hash_tools import get_file_hash
 
-def get_file_hash(file_path):
+
+def detect_duplicates(files):
     """
-    Returns the hash of the file
+    Detects duplicate files in the list of files
     """
-    hasher = hashlib.sha256()
+    duplicates = {}
+    hashes = {}
 
-    with open(file_path, "rb") as file:
-        while chunk := file.read(4096):
-            hasher.update(chunk)
+    for file in files:
+        file_hash = get_file_hash(file)
 
-    return hasher.hexdigest()
+        if file_hash in hashes:
+            duplicates[file] = hashes[file_hash]
+        else:
+            hashes[file_hash] = file
+
+    return duplicates
 
 
-# Test
-video_file_name = "[Nanatsu no Taizai AMV] It Has Begun - Starset.mp4"
-video_file_path = os.path.join("../../tests", video_file_name)
-
-print(get_file_hash(video_file_path))  # "c342ec81b9a40fcad970f8a6824732f37ea202fa5ff0ea1edd11a26a31a80143"
+# Tests
+## Test detect_duplicates
+print("Test detect_duplicates")
+directory_name = "tests"
+directoy_path = os.path.join("../../", directory_name)
+print(detect_duplicates(scan_directory(directoy_path)))
+# {'../../tests\\aDuplicateDirectory\\[Nanatsu no Taizai AMV] It Has Begun - Starset.mp4':
+# '../../tests\\[Nanatsu no Taizai AMV] It Has Begun - Starset.mp4'}

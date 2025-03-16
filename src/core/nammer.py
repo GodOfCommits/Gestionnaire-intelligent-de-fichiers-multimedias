@@ -19,4 +19,5 @@ def clean_filename(file_name, resolution):
 
 
 # Test
+print("Test clean_filename")
 print(clean_filename("une_video_[HD].mp4", "1080p"))  # "une video (1080p).mp4"
